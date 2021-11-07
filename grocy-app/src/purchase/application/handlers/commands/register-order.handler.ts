@@ -1,14 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { RegisterOrderCommand } from "../../../messages/commands/register-order-command";
 import { InjectRepository } from "@nestjs/typeorm";
-import { OrderSchema } from "../../../infraestructure/persistence/schemas/order.schema";
+import { OrderSchema } from "../../../infrastructure/persistence/schemas/order.schema";
 import { InsertResult, Repository } from "typeorm";
 import { Order } from "../../../domain/entities/order";
 import { OrderFactory } from "../../../domain/factories/order-factory";
 
 
 @CommandHandler(RegisterOrderCommand)
-export class registerOrderHandler
+export class RegisterOrderHandler
   implements ICommandHandler<RegisterOrderCommand>{
   constructor(
     @InjectRepository(OrderSchema)

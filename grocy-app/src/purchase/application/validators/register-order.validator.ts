@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { OrderSchema } from "../../infraestructure/persistence/schemas/order.schema";
+import { OrderSchema } from "../../infrastructure/persistence/schemas/order.schema";
 import { Repository } from "typeorm";
 import { Order } from "../../domain/entities/order";
 import { RegisterOrderRequestDto } from "../dtos/request/register-order-request.dto";

@@ -1,11 +1,10 @@
 import { EntitySchema } from "typeorm";
 import { Order } from "../../../domain/entities/order";
 
-
 export const OrderSchema =new EntitySchema({
   name:'Order',
   target:Order,
-  tableName:'Order',
+  tableName:'orders',
   columns:{
     id:{
       type: 'bigint',

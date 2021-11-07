@@ -4,7 +4,6 @@ import { DateTime } from "../../../common/domain/value-objects/date-time.value";
 import { Status } from "../../../common/domain/Enum/Status";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
 
-
 export class Order extends Entity {
   private Price:Money;
   private PurchaseDate:DateTime;

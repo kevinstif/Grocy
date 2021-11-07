@@ -4,8 +4,8 @@ import { Status } from "../../../../common/domain/Enum/Status";
 
 export class RegisterOrderRequestDto{
   public constructor(
-    public readonly price:Money,
-    public readonly purchaseDate:DateTime,
-    public readonly status:Status
+    public readonly price:number,
+    public readonly purchaseDate:string,
+    public readonly status:string
   ) {}
 }

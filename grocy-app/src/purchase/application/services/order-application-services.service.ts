@@ -6,6 +6,8 @@ import { RegisterOrderResponseDto } from "../dtos/response/register-order-respon
 import { RegisterOrderCommand } from "../../messages/commands/register-order-command";
 import { RegisterOrderValidator } from "../validators/register-order.validator";
 import { CommandBus } from "@nestjs/cqrs";
+import { getRepository } from "typeorm";
+import { OrderSchema } from "../../infrastructure/persistence/schemas/order.schema";
 
 @Injectable()
 export class OrderApplicationServices {
@@ -19,9 +21,15 @@ export class OrderApplicationServices {
       return Result.error(notification);
     }
 
-    const registerOrderCommand:RegisterOrderCommand =new RegisterOrderCommand(registerOrderRequestDto.price,registerOrderRequestDto.purchaseDate,registerOrderRequestDto.status);
-    const orderId=await this.commandBus.execute(registerOrderCommand);
-    const registerOrderResponseDto:RegisterOrderResponseDto= new RegisterOrderResponseDto(orderId,registerOrderRequestDto.price,registerOrderRequestDto.purchaseDate,registerOrderRequestDto.status);
+    const registerOrderCommand:RegisterOrderCommand =new RegisterOrderCommand(
+      registerOrderRequestDto.price,
+      registerOrderRequestDto.purchaseDate,
+      registerOrderRequestDto.status
+    );
+    const orderRepository=getRepository(OrderSchema);
+    await orderRepository.insert(registerOrderCommand);
+    console.log("aqui");
+    const registerOrderResponseDto:RegisterOrderResponseDto= new RegisterOrderResponseDto(1,registerOrderRequestDto.price,registerOrderRequestDto.purchaseDate,registerOrderRequestDto.status);
     return Result.ok(registerOrderResponseDto);
   }
 }

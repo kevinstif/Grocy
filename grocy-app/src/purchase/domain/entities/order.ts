@@ -5,12 +5,12 @@ import { Status } from "../../../common/domain/Enum/Status";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
 
 export class Order extends Entity {
-  private Price:Money;
-  private PurchaseDate:DateTime;
-  private Status:Status;
+  private Price:number;
+  private PurchaseDate:string;
+  private Status:string;
   //TODO: Relations with customer will be place here
 
-  public constructor(id:number,price:Money,purchaseDate:DateTime,status:Status) {
+  public constructor(id:number,price:number,purchaseDate:string,status:string) {
     super(id);
     this.Price=price;
     this.PurchaseDate=purchaseDate;
@@ -21,23 +21,23 @@ export class Order extends Entity {
     this.apply(event);
   }
 
-  public GetPrice():Money{
+  public GetPrice():number{
     return this.Price;
   }
-  public GetPurchaseDate():DateTime{
+  public GetPurchaseDate():string{
     return this.PurchaseDate;
   }
-  public GetStatus():Status{
+  public GetStatus():string{
     return this.Status;
   }
 
-  public changePrice(price:Money):void{
+  public changePrice(price:number):void{
     this.Price=price;
   }
-  public changePurchaseDate(purchaseDate:DateTime):void{
+  public changePurchaseDate(purchaseDate:string):void{
     this.PurchaseDate=purchaseDate;
   }
-  public changeStatus(status:Status):void{
+  public changeStatus(status:string):void{
     this.Status=status;
   }
 }

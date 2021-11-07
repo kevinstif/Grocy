@@ -12,6 +12,9 @@ export class OrderController{
 
   @Post()
   async CreatedOrder(@Body() registerOrderRequestDto:RegisterOrderRequestDto, @Res({passthrough:true})response):Promise<object>{
+
+    console.log("controller funciona");
+
     try {
       const result: Result<AppNotification, RegisterOrderResponseDto> = await this.orderApplicationServices.Register(registerOrderRequestDto);
       if (result.isSuccess()) {

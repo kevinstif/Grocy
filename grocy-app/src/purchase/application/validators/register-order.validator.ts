@@ -14,17 +14,17 @@ export class RegisterOrderValidator{
 
   public async validate(registerOrderRequestDto:RegisterOrderRequestDto):Promise<AppNotification>{
     let notification: AppNotification = new AppNotification();
-    const price: Money = registerOrderRequestDto.price;
-    if (price.getAmount() <= 0) {
+    const price: number = registerOrderRequestDto.price;
+    if (price <= 0) {
       notification.addError('Order price is required', null);
     }
-    const Date: DateTime = registerOrderRequestDto.purchaseDate;
-    const purchaseDate:string=Date.getDate().toString().trim();
+    const Date: string = registerOrderRequestDto.purchaseDate;
+    const purchaseDate:string=Date.trim();
     if (purchaseDate.length <= 0) {
       notification.addError('Order purchaseDate is required', null);
     }
-    const dni: string = registerOrderRequestDto.status.toString().trim();
-    if (dni.length <= 0) {
+    const status: string = registerOrderRequestDto.status.trim();
+    if (status.length <= 0) {
       notification.addError('Order status is required', null);
     }
     if (notification.hasErrors()) {

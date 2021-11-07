@@ -5,8 +5,8 @@ import { Status } from "../../../common/domain/Enum/Status";
 export class OrderRegisteredEvents{
   constructor(
     public readonly id:number,
-    public readonly price:Money,
-    public readonly purchaseDate:DateTime,
-    public readonly status:Status
+    public readonly price:number,
+    public readonly purchaseDate:string,
+    public readonly status:string
   ) {}
 }

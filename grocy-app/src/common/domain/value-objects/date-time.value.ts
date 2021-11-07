@@ -15,6 +15,10 @@ export class DateTime {
     );
   }
 
+  public getDate(): Date{
+    return this.datetime
+  }
+
   public static utcNow() {
     moment.tz.setDefault('UTC');
     const datetime = moment.tz().toDate();

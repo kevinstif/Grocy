@@ -4,8 +4,8 @@ import { Status } from "../../../common/domain/Enum/Status";
 
 export class RegisterOrderCommand{
   constructor(
-    private readonly price:Money,
-    private readonly purchaseDate:DateTime,
-    private readonly status:Status
+    public readonly price:Money,
+    public readonly purchaseDate:DateTime,
+    public readonly status:Status
   ) {}
 }

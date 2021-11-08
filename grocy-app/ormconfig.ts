@@ -7,24 +7,22 @@ module.exports = {
   entities: [getEntityDirectory()],
   migrations: [getMigrationDirectory()],
   cli: {
-    //falta editar esta parte
-    migrationsDir: 'src/common/infrastructure/migrations',
+    migrationsDir: 'src/common/infrastructure/persistence/typeorm/migrations',
   },
 };
-//falta editar esta funcion
+
 function getEntityDirectory() {
-  let path = 'dist/src/**/infrastructure/persistence/schemas/*.js';
+  let path = 'dist/src/**/infrastructure/persistence/typeorm/entities/*.js';
   if (process.env.NODE_ENV === 'migration') {
-    path = 'src/**/infrastructure/persistence/schemas/*.ts';
+    path = 'src/**/infrastructure/persistence/typeorm/entities/*.ts';
   }
   return path;
 }
 
-//falta editar esta funcion
 function getMigrationDirectory() {
-  let path = 'dist/src/common/infrastructure/migrations/*.js';
+  let path = 'dist/src/common/infrastructure/persistence/typeorm/migrations/*.js';
   if (process.env.NODE_ENV === 'migration') {
-    path = 'src/common/infrastructure/migrations/*.ts';
+    path = 'src/common/infrastructure/persistence/typeorm/migrations/*.ts';
   }
   return path;
 }

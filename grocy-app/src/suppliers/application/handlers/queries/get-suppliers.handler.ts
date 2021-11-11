@@ -14,6 +14,7 @@ export class GetSuppliersHandler implements IQueryHandler<GetSuppliersQuery> {
       id,
       first_name as firstName,
       last_name as lastName,
+      phone,
       dni
     FROM 
       suppliers
@@ -28,6 +29,7 @@ export class GetSuppliersHandler implements IQueryHandler<GetSuppliersQuery> {
       supplierDto.id = Number(ormSupplier.id);
       supplierDto.firstName = ormSupplier.firstName;
       supplierDto.lastName = ormSupplier.lastName;
+      supplierDto.phone = ormSupplier.phone;
       supplierDto.dni = ormSupplier.dni;
       return supplierDto;
     });

@@ -27,14 +27,18 @@ export class RegisterSupplierValidator {
     }
     const dni: string = registerSupplierRequestDto.dni.trim();
     if (dni.length <= 0) {
-      notification.addError('Supplier ruc is required', null);
+      notification.addError('Supplier dni is required', null);
+    }
+    const phone: string = registerSupplierRequestDto.phone.trim();
+    if (phone.length <= 0) {
+      notification.addError('Supplier phone is required', null);
     }
     if (notification.hasErrors()) {
       return notification;
     }
     const supplier: SupplierTypeorm = await this.supplierRepository.createQueryBuilder().where("dni = :dni", { dni }).getOne();
     if (supplier != null) {
-      notification.addError('Supplier ruc is taken', null);
+      notification.addError('Supplier dni is taken', null);
     }
     return notification;
   }

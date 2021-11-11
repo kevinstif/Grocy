@@ -8,7 +8,6 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "postbuild": "node -e \"require('fs').copyFile('src/common/infrastructure/persistence/typeorm/migrations/ubigeo-peru-inei-2016.sql', './dist/src/common/infrastructure/persistence/typeorm/migrations/ubigeo-peru-inei-2016.sql', function(err) { if (err) console.log(err); console.log('ubigeo.sql copied!') })\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

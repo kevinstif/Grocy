@@ -11,6 +11,7 @@ import { AppNotification } from '../../../../common/application/app.notification
 import { SupplierTypeorm } from '../../../infrastructure/persistence/typeorm/entities/supplier.typeorm';
 import { Name } from '../../../../common/domain/value-objects/name.value';
 import { SupplierMapper } from '../../mappers/supplier.mapper';
+import { Phone } from "../../../domain/value-objects/phone.value";
 
 @CommandHandler(RegisterSupplierCommand)
 export class RegisterSupplierHandler
@@ -27,11 +28,15 @@ export class RegisterSupplierHandler
     if (dniResult.isFailure()) {
       return 0;
     }
+    const phoneResult: Result<AppNotification, Phone> = Phone.create(command.phone);
+    if (phoneResult.isFailure()) {
+      return 0;
+    }
     const nameResult: Result<AppNotification, Name> = Name.create(command.firstName, command.lastName);
     if (nameResult.isFailure()) {
       return 0;
     }
-    let supplier: Supplier = SupplierFactory.createFrom(nameResult.value, dniResult.value);
+    let supplier: Supplier = SupplierFactory.createFrom(nameResult.value, dniResult.value, phoneResult.value);
     let supplierTypeORM = SupplierMapper.toTypeORM(supplier);
     supplierTypeORM = await this.supplierRepository.save(supplierTypeORM);
     if (supplierTypeORM == null) {

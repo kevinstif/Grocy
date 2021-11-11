@@ -3,4 +3,5 @@ export class GetSuppliersDto {
   public firstName: string;
   public lastName: string;
   public dni: string;
+  public phone: string;
 }

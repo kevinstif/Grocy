@@ -26,7 +26,7 @@ export class SuppliersApplicationService {
     const registerSupplierCommand: RegisterSupplierCommand = new RegisterSupplierCommand(
       registerSupplierRequestDto.firstName,
       registerSupplierRequestDto.lastName,
-      registerSupplierRequestDto.dni,
+      registerSupplierRequestDto.ruc,
       registerSupplierRequestDto.phone,
     );
     const supplierId = await this.commandBus.execute(registerSupplierCommand);
@@ -34,7 +34,7 @@ export class SuppliersApplicationService {
       supplierId,
       registerSupplierRequestDto.firstName,
       registerSupplierRequestDto.lastName,
-      registerSupplierRequestDto.dni,
+      registerSupplierRequestDto.ruc,
       registerSupplierRequestDto.phone,
     );
     return Result.ok(registerSupplierResponseDto);

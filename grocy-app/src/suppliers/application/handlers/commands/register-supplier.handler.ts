@@ -5,7 +5,7 @@ import { RegisterSupplierCommand } from 'src/suppliers/application/commands/regi
 import { Repository } from 'typeorm';
 import { SupplierFactory } from '../../../domain/factories/supplier.factory';
 import { SupplierId } from '../../../domain/value-objects/supplier-id.value';
-import { Dni } from '../../../domain/value-objects/dni.value';
+import { Ruc } from '../../../domain/value-objects/ruc.value';
 import { Result } from 'typescript-result';
 import { AppNotification } from '../../../../common/application/app.notification';
 import { SupplierTypeorm } from '../../../infrastructure/persistence/typeorm/entities/supplier.typeorm';
@@ -24,8 +24,8 @@ export class RegisterSupplierHandler
   }
 
   async execute(command: RegisterSupplierCommand) {
-    const dniResult: Result<AppNotification, Dni> = Dni.create(command.dni);
-    if (dniResult.isFailure()) {
+    const rucResult: Result<AppNotification, Ruc> = Ruc.create(command.ruc);
+    if (rucResult.isFailure()) {
       return 0;
     }
     const phoneResult: Result<AppNotification, Phone> = Phone.create(command.phone);
@@ -36,7 +36,7 @@ export class RegisterSupplierHandler
     if (nameResult.isFailure()) {
       return 0;
     }
-    let supplier: Supplier = SupplierFactory.createFrom(nameResult.value, dniResult.value, phoneResult.value);
+    let supplier: Supplier = SupplierFactory.createFrom(nameResult.value, rucResult.value, phoneResult.value);
     let supplierTypeORM = SupplierMapper.toTypeORM(supplier);
     supplierTypeORM = await this.supplierRepository.save(supplierTypeORM);
     if (supplierTypeORM == null) {

@@ -15,7 +15,7 @@ export class GetSuppliersHandler implements IQueryHandler<GetSuppliersQuery> {
       first_name as firstName,
       last_name as lastName,
       phone,
-      dni
+      ruc
     FROM 
       suppliers
     ORDER BY
@@ -30,7 +30,7 @@ export class GetSuppliersHandler implements IQueryHandler<GetSuppliersQuery> {
       supplierDto.firstName = ormSupplier.firstName;
       supplierDto.lastName = ormSupplier.lastName;
       supplierDto.phone = ormSupplier.phone;
-      supplierDto.dni = ormSupplier.dni;
+      supplierDto.ruc = ormSupplier.ruc;
       return supplierDto;
     });
     return suppliers;

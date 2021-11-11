@@ -9,13 +9,13 @@ export class InitialSchema1635276230500 implements MigrationInterface {
          \`first_name\` varchar(75) NOT NULL,
          \`last_name\` varchar(75) NOT NULL,
          \`phone\` varchar(9) NOT NULL,
-         \`dni\` varchar(8) NOT NULL,
-         UNIQUE INDEX \`UQ_suppliers_dni\` (\`dni\`),
+         \`ruc\` varchar(11) NOT NULL,
+         UNIQUE INDEX \`UQ_suppliers_ruc\` (\`ruc\`),
          PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP INDEX \`UQ_suppliers_dni\` ON \`grocy\`.\`suppliers\``);
+        await queryRunner.query(`DROP INDEX \`UQ_suppliers_ruc\` ON \`grocy\`.\`suppliers\``);
         await queryRunner.query(`DROP TABLE \`grocy\`.\`suppliers\``);
     }
 

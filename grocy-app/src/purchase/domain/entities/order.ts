@@ -1,14 +1,10 @@
 import { Entity } from "../../../common/domain/entities/entity";
-import { Money } from "../../../common/domain/value-objects/money.value";
-import { DateTime } from "../../../common/domain/value-objects/date-time.value";
-import { Status } from "../../../common/domain/Enum/Status";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
 
 export class Order extends Entity {
   private Price:number;
   private PurchaseDate:string;
   private Status:string;
-  //TODO: Relations with customer will be place here
 
   public constructor(id:number,price:number,purchaseDate:string,status:string) {
     super(id);

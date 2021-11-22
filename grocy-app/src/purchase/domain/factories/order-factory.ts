@@ -1,7 +1,3 @@
-import { Money } from "../../../common/domain/value-objects/money.value";
-import { DateTime } from "../../../common/domain/value-objects/date-time.value";
-import { Status } from "../../../common/domain/Enum/Status";
-import { Id } from "../../../common/domain/value-objects/id.value";
 import { Order } from "../entities/order";
 
 export class OrderFactory{

@@ -7,21 +7,20 @@ import { RegisterOrderCommand } from "../../messages/commands/register-order-com
 import { RegisterOrderValidator } from "../validators/register-order.validator";
 import { CommandBus } from "@nestjs/cqrs";
 import { EntitySchema, getRepository, Repository } from "typeorm";
-import { OrderSchema } from "../../infrastructure/persistence/schemas/order.schema";
+import { OrderTypeORM } from "../../infrastructure/persistence/typeorm/entities/orderTypeORM";
 import { InjectRepository } from "@nestjs/typeorm";
 import { EdithOrderRequestDto } from "../dtos/request/edith-order-request.dto";
 import { Order } from "../../domain/entities/order";
 import { RegisterOrderHandler } from "../handlers/commands/register-order.handler";
+import { DateTime } from "../../../common/domain/value-objects/date-time.value";
 
 @Injectable()
 export class OrderApplicationServices {
 
   constructor(
-    private commandBus:CommandBus,
     private registerOrderValidator:RegisterOrderValidator,
-    @InjectRepository(OrderSchema)
-    private readonly orderRepository:Repository<Order>,
-    private readonly registerOrderHandler: RegisterOrderHandler
+    @InjectRepository(OrderTypeORM)
+    private readonly orderRepository:Repository<OrderTypeORM>
   ) {}
 
   async GetAll(){
@@ -31,24 +30,18 @@ export class OrderApplicationServices {
   async GetById(id: number){
 
    const order= await this.orderRepository.findOne(id);
-   if(!order) throw new NotFoundException('Post does not exist');
+   if(!order) throw new NotFoundException('Order does not exist');
    return order;
   }
 
-  async Create(registerOrderRequestDto:RegisterOrderRequestDto):Promise<Result<AppNotification, RegisterOrderResponseDto>>{
+  async Create(registerOrderRequestDto:RegisterOrderRequestDto)
+    :Promise<Result<AppNotification, RegisterOrderResponseDto>>{
 
     const notification:AppNotification=await this.registerOrderValidator.validate(registerOrderRequestDto);
 
     if (notification.hasErrors()){
       return Result.error(notification);
     }
-    /*
-    const registerOrderCommand:RegisterOrderCommand =new RegisterOrderCommand(
-      registerOrderRequestDto.price,
-      registerOrderRequestDto.purchaseDate,
-      registerOrderRequestDto.status
-    );*/
-
     const insertResult= await this.orderRepository.insert(registerOrderRequestDto as any);
 
     const orderId:number=Number(insertResult.identifiers[0].id);

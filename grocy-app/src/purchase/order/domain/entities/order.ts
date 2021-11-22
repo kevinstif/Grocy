@@ -1,4 +1,4 @@
-import { Entity } from "../../../common/domain/entities/entity";
+import { Entity } from "../../../../common/domain/entities/entity";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
 
 export class Order extends Entity {

@@ -4,7 +4,7 @@ import { OrderTypeORM } from "../../infrastructure/persistence/typeorm/entities/
 import { Repository } from "typeorm";
 import { Order } from "../../domain/entities/order";
 import { RegisterOrderRequestDto } from "../dtos/request/register-order-request.dto";
-import { AppNotification } from "../../../common/application/app.notification";
+import { AppNotification } from "../../../../common/application/app.notification";
 
 @Injectable()
 export class RegisterOrderValidator{

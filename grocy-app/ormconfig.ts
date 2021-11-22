@@ -10,8 +10,6 @@ module.exports = {
     migrationsDir: 'src/common/infrastructure/persistence/typeorm/migrations',
   },
 };
-
-
 function getEntityDirectory() {
   let path = 'dist/src/**/infrastructure/persistence/typeorm/entities/*.js';
   if (process.env.NODE_ENV === 'migration') {

@@ -6,8 +6,7 @@ import { registerOffersResponseDto } from "../application/dtos/response/register
 import { AppNotification } from "../../../common/application/app.notification";
 import { ApiController } from "../../../common/api/api.controller";
 
-
-@Controller('orders')
+@Controller('offer')
 export class OrderController{
     constructor(private readonly orderApplicationServices:OfferApplicationServices,) {}
 

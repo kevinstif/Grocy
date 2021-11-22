@@ -7,16 +7,11 @@ module.exports = {
   entities: [getEntityDirectory()],
   migrations: [getMigrationDirectory()],
   cli: {
-/*<<<<<<< HEAD
-    migrationsDir: 'src/common/infrastructure/migrations',
-  },
-};
-=======*/
     migrationsDir: 'src/common/infrastructure/persistence/typeorm/migrations',
   },
 };
 
-//>>>>>>> origin/feature-suppliers
+
 function getEntityDirectory() {
   let path = 'dist/src/**/infrastructure/persistence/typeorm/entities/*.js';
   if (process.env.NODE_ENV === 'migration') {

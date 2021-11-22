@@ -4,9 +4,10 @@ import { OfferSchema } from "../../infrastructure/persistence/schema/offer.schem
 import { Repository } from "typeorm";
 import { Offer } from "../../domain/entity/offer";
 import { registerOffersRequestDto } from "../dtos/request/register-offers-request.dto";
-import { AppNotification } from "../../../common/application/app.notification";
-import { Money } from "../../../common/domain/value-objects/money.value";
-import { DateTime } from "../../../common/domain/value-objects/date-time.value";
+import { AppNotification } from "../../../../common/application/app.notification";
+import { Money } from "../../../../common/domain/value-objects/money.value";
+import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
+
 
 @Injectable()
 export class RegisterOfferValidator{

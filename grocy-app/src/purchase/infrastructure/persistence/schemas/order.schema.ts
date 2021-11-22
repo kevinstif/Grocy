@@ -27,6 +27,4 @@ export const OrderSchema =new EntitySchema({
       length: 30,
     }
   }
-
-
 })

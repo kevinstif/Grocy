@@ -18,7 +18,9 @@ export class RegisterOrderHandler
 
   async execute(command:RegisterOrderCommand){
     const orderEntity:Order =OrderFactory.createFrom(command.price, command.purchaseDate,command.status);
-    const insertResult:InsertResult= await this.orderRepository.insert(orderEntity);
+    console.log(orderEntity);
+    const insertResult:InsertResult= await this.orderRepository.insert(orderEntity as any);
+    console.log(insertResult);
     const orderId:number=Number(insertResult.identifiers[0].id);
     orderEntity.changeId(orderId);
     const order: Order= this.publisher.mergeObjectContext(orderEntity);

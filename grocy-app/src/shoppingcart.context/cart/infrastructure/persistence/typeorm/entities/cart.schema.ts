@@ -1,6 +1,16 @@
-import { Column, Entity, EntitySchema, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  EntitySchema,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { OrderTypeORM } from "../../../../../../purchase/order/infrastructure/persistence/typeorm/entities/orderTypeORM";
 import { ProductTypeORM } from "../../../../../../purchase/product/infrastructure/persistence/typeorm/entities/productTypeORM";
+import { CustomerSchema } from "../../../../../../purchase/customer/infrastructure/persistence/typeorm/entities/customer.schema";
 
 @Entity('cart')
 export class CartSchema{
@@ -17,10 +27,13 @@ export class CartSchema{
   @Column('varchar',{name:'creation_date'})
   public creationDate:string;
 
-  @ManyToOne(()=>OrderTypeORM,(order)=>order.Cart)
-  @JoinColumn({name:'order_id'})
-  public order:OrderTypeORM
+  @OneToMany(()=>OrderTypeORM,(order)=>order.Cart)
+  public order:OrderTypeORM[]
 
   @ManyToMany(()=>ProductTypeORM,(product)=>product.carts)
   public products:ProductTypeORM[];
+
+  @ManyToOne(()=>CustomerSchema,(customer)=>customer.carts)
+  @JoinColumn({name:'customer_id'})
+  public customer:CustomerSchema;
 }

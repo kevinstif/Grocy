@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Cart } from "../../../../../../shoppingcart.context/cart/domain/entities/cart";
+import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
+import { CustomerSchema } from "../../../../../customer/infrastructure/persistence/typeorm/entities/customer.schema";
 
 @Entity('orders')
 export class OrderTypeORM{
@@ -13,4 +16,12 @@ export class OrderTypeORM{
 
   @Column('varchar',{name:'purchase_date'})
   public purchaseDate:string;
+
+  @ManyToOne(()=>CartSchema,(cart)=>cart.order)
+  @JoinColumn({name:'cart_id'})
+  public Cart:CartSchema;
+
+  @ManyToOne(()=>CustomerSchema,(customer)=>customer.orders)
+  @JoinColumn({name:'customer_id'})
+  public customer:CustomerSchema;
 }

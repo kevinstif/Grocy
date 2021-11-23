@@ -1,38 +1,26 @@
-import { EntitySchema } from "typeorm";
-import { Cart } from "../../../../domain/entities/cart";
+import { Column, Entity, EntitySchema, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { OrderTypeORM } from "../../../../../../purchase/order/infrastructure/persistence/typeorm/entities/orderTypeORM";
+import { ProductTypeORM } from "../../../../../../purchase/product/infrastructure/persistence/typeorm/entities/productTypeORM";
 
-export const CartSchema =new EntitySchema({
-  name:'Cart',
-  target:Cart,
-  tableName:'shoppingCarts',
-  columns:{
-    id:{
-      type: 'bigint',
-      primary: true,
-      generated: true,
-      unsigned: true,
-    },
-    state:{
-      name:'state',
-      type:String,
-      length:10
-    },
-    customerId:{
-      name:'customerId',
-      type:Number,
-    },
-    productId:{
-      name:'productId',
-      type:Number,
-    },
-    quantity:{
-      name:'quantity',
-      type:Number,
-    },
-    creationDate:{
-      name:'creation_date',
-      type:String,
-      length: 30,
-    }
-  }
-})
+@Entity('cart')
+export class CartSchema{
+
+  @PrimaryGeneratedColumn('increment',{type: 'bigint', name: 'id', unsigned: true})
+  public id:number;
+
+  @Column('varchar',{name:'state'})
+  public state:string;
+
+  @Column('int',{name:'quantity'})
+  public quantity:number;
+
+  @Column('varchar',{name:'creation_date'})
+  public creationDate:string;
+
+  @ManyToOne(()=>OrderTypeORM,(order)=>order.Cart)
+  @JoinColumn({name:'order_id'})
+  public order:OrderTypeORM
+
+  @ManyToMany(()=>ProductTypeORM,(product)=>product.carts)
+  public products:ProductTypeORM[];
+}

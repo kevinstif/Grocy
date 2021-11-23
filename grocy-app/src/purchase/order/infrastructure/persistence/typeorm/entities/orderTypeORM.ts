@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Cart } from "../../../../../../shoppingcart.context/cart/domain/entities/cart";
+import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
 
 @Entity('orders')
 export class OrderTypeORM{
@@ -13,4 +15,7 @@ export class OrderTypeORM{
 
   @Column('varchar',{name:'purchase_date'})
   public purchaseDate:string;
+
+  @OneToMany(()=>CartSchema,(cart)=>cart.order)
+  public Cart:CartSchema[];
 }

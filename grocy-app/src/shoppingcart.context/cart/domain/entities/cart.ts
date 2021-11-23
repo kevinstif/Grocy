@@ -1,5 +1,6 @@
 import { Entity } from "../../../../common/domain/entities/entity";
 import { CartRegisteredEvents } from "../../messages/events/cart-registered.events";
+import { Order } from "../../../../purchase/order/domain/entities/order";
 
 export class Cart extends Entity {
   private CustomerId:number;
@@ -7,6 +8,7 @@ export class Cart extends Entity {
   private Quantity:number;
   private CreationDate:string;
   private State:string;
+  private Orders:Order[];
 
   public constructor(id:number,customerId:number,productId:number,quantity:number,creationDate:string,state:string) {
     super(id);

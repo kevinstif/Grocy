@@ -1,10 +1,13 @@
 import { Entity } from "../../../../common/domain/entities/entity";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
+import { Cart } from "../../../../shoppingcart.context/cart/domain/entities/cart";
 
 export class Order extends Entity {
   private Price:number;
   private PurchaseDate:string;
   private Status:string;
+  private cart:Cart;
+  private cartId:number;
 
   public constructor(id:number,price:number,purchaseDate:string,status:string) {
     super(id);

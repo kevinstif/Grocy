@@ -1,4 +1,4 @@
 export enum Status {
-  Done = 1,
-  Canceled = 2,
+  Done = 'Done',
+  Canceled = 'Cancel',
 }

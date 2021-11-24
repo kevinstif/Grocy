@@ -24,6 +24,9 @@ export class RegisterProductValidator{
     if(type.length<=0){
       notification.addError('type is required',null);
     }
+    if(type!='P' && type!='E'){
+      notification.addError('type is invalid, select a valid type E: expire || p: package',null);
+    }
     if(price<=0){
       notification.addError('price is required',null);
     }

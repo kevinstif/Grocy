@@ -1,6 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
+import { CartSchema } from "../../../../../../shoppingcart/cart/infrastructure/persistence/typeorm/entities/cart.schema";
 import { SupplierTypeorm } from "../../../../../../offer.context/suppliers/infrastructure/persistence/typeorm/entities/supplier.typeorm";
+import { TypeProduct } from "../../../../domain/enums/type-product";
+import { PriceTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/PriceTypeORM";
 
 @Entity('products')
 export class ProductTypeORM{
@@ -10,11 +12,11 @@ export class ProductTypeORM{
   @Column('varchar',{name:'name'})
   public name:string;
 
-  @Column('varchar',{name:'type'})
-  public type:string;
+  @Column({name:'type',type:'enum',enum:TypeProduct,default:TypeProduct.package})
+  public type:TypeProduct;
 
-  @Column('int',{name:'price'})
-  public price:number;
+  @Column(()=>PriceTypeORM,{prefix:false})
+  public price:PriceTypeORM;
 
   @Column('int',{name:'stock'})
   public stock:number;

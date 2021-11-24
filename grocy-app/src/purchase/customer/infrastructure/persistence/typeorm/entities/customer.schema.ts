@@ -1,6 +1,6 @@
 import { Column, Entity, EntitySchema, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { OrderTypeORM } from "../../../../../order/infrastructure/persistence/typeorm/entities/orderTypeORM";
-import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
+import { CartSchema } from "../../../../../../shoppingcart/cart/infrastructure/persistence/typeorm/entities/cart.schema";
 
 @Entity('customers')
 export class CustomerSchema{

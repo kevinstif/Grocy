@@ -8,12 +8,15 @@ import { Result } from "typescript-result";
 import { AppNotification } from "../../../../common/application/app.notification";
 import { RegisterProductResponseDto } from "../dtos/response/register-product-response.dto";
 import { EdithProductRequestDto } from "../dtos/request/edith-product-request.dto";
+import { RegisterProductCommand } from "../../messages/commands/register-product.command";
+import { CommandBus } from "@nestjs/cqrs";
 
 @Injectable()
 export class ProductApplicationService{
 
   constructor(
     private validator:RegisterProductValidator,
+    private commandBus:CommandBus,
     @InjectRepository(ProductTypeORM)
     private readonly productRepository:Repository<ProductTypeORM>
   ) {}
@@ -37,9 +40,14 @@ export class ProductApplicationService{
       return Result.error(notification);
     }
 
-    const insertResult=await this.productRepository.insert(registerProductRequestDto as any);
+    const registerProductCommand=new RegisterProductCommand(
+      registerProductRequestDto.name,
+      registerProductRequestDto.type,
+      registerProductRequestDto.price,
+      registerProductRequestDto.stock
+    )
 
-    const productId:number=Number(insertResult.identifiers[0].id);
+    const productId= await this.commandBus.execute(registerProductCommand);
 
     const response:RegisterProductResponseDto=new RegisterProductResponseDto(
       productId,

@@ -4,9 +4,9 @@ import {CompletedCart} from "./concrete/completed-cart";
 
 export class Client {
     public execute(): void {
-        let cart = new Cart(new CompletedCart());
+        let cart = new Cart(new PendingCart());
         cart.request();
-        cart.transitionTo(new PendingCart());
+        cart.transitionTo(new CompletedCart());
     }
 }
 

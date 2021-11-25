@@ -8,9 +8,9 @@ var Client = /** @class */ (function () {
     function Client() {
     }
     Client.prototype.execute = function () {
-        var cart = new cart_1.Cart(new completed_cart_1.CompletedCart());
+        var cart = new cart_1.Cart(new pending_cart_1.PendingCart());
         cart.request();
-        cart.transitionTo(new pending_cart_1.PendingCart());
+        cart.transitionTo(new completed_cart_1.CompletedCart());
     };
     return Client;
 }());

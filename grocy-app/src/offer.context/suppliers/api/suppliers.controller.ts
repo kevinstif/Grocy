@@ -7,7 +7,9 @@ import { AppNotification } from '../../../common/application/app.notification';
 import { ApiController } from '../../../common/api/api.controller';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetSuppliersQuery } from '../application/queries/get-suppliers.query';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Suppliers')
 @Controller('suppliers')
 export class SuppliersController {
   constructor(
@@ -15,7 +17,19 @@ export class SuppliersController {
     private readonly queryBus: QueryBus
   ) {}
 
+  @Get()
+  @ApiOperation({ summary: 'All suppliers' })
+  async getSuppliers(@Res({ passthrough: true }) response): Promise<object> {
+    try {
+      const suppliers = await this.queryBus.execute(new GetSuppliersQuery());
+      return ApiController.ok(response, suppliers);
+    } catch (error) {
+      return ApiController.serverError(response);
+    }
+  }
+
   @Post()
+  @ApiOperation({ summary: 'Create supplier' })
   async register(
     @Body() registerSupplierRequestDto: RegisterSupplierRequestDto,
     @Res({ passthrough: true }) response
@@ -26,16 +40,6 @@ export class SuppliersController {
           return ApiController.created(response, result.value);
       }
       return ApiController.error(response, result.error.getErrors());
-    } catch (error) {
-      return ApiController.serverError(response);
-    }
-  }
-
-  @Get()
-  async getSuppliers(@Res({ passthrough: true }) response): Promise<object> {
-    try {
-      const suppliers = await this.queryBus.execute(new GetSuppliersQuery());
-      return ApiController.ok(response, suppliers);
     } catch (error) {
       return ApiController.serverError(response);
     }

@@ -7,22 +7,27 @@ import { AppNotification } from "../../../common/application/app.notification";
 import { RegisterProductResponseDto } from "../application/dtos/response/register-product-response.dto";
 import { ApiController } from "../../../common/api/api.controller";
 import { response } from "express";
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productService:ProductApplicationService) {}
 
   @Get()
+  @ApiOperation({ summary: 'All Products' })
   async GetAll(){
     return this.productService.GetAll();
   }
 
   @Get(":id")
+  @ApiOperation({ summary: 'Find product by Id' })
   async  GetById(@Param('id', ParseIntPipe) id: number){
     return await this.productService.GetById(id);
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create product' })
   async CreatedOrder(@Body() registerProductRequestDto:RegisterProductRequestDto){
 
     try {
@@ -37,11 +42,13 @@ export class ProductsController {
   }
 
   @Put(":id")
+  @ApiOperation({ summary: 'Update product by Id' })
   async UpdateOrder(@Param('id', ParseIntPipe) id: number,@Body() edithProductRequestDto:EdithProductRequestDto){
     return await this.productService.Update(id,edithProductRequestDto);
   }
 
   @Delete(":id")
+  @ApiOperation({ summary: 'Delete order by Id' })
   async  Delete(@Param('id', ParseIntPipe) id: number){
     return await  this.productService.Delete(id);
   }

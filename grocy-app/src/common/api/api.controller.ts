@@ -20,7 +20,8 @@ export class ApiController {
     return Envelope.error(errors);
   }
 
-  static serverError(response: Response): Envelope {
+  static serverError(response: Response, error): Envelope {
+    console.log(error);
     response.status(HttpStatus.INTERNAL_SERVER_ERROR);
     return Envelope.serverError();
   }

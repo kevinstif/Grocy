@@ -7,7 +7,7 @@ import { AppNotification } from "../../../common/application/app.notification";
 import { ApiController } from "../../../common/api/api.controller";
 
 @Controller('offer')
-export class OrderController{
+export class OffersController{
     constructor(private readonly orderApplicationServices:OfferApplicationServices,) {}
 
     @Post()

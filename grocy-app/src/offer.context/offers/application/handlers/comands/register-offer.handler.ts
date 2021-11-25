@@ -8,7 +8,7 @@ import {Offer} from "../../../domain/entity/offer";
 
 
 @CommandHandler(RegisterOfferCommand)
-export class registerOfferHandler
+export class RegisterOfferHandler
     implements ICommandHandler<RegisterOfferCommand>{
     constructor(
         @InjectRepository(OfferSchema)

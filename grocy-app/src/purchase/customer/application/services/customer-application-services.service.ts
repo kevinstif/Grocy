@@ -10,6 +10,7 @@ import { CustomerSchema } from "../../infrastructure/persistence/typeorm/entitie
 import { InjectRepository } from "@nestjs/typeorm";
 import { EditCustomerRequestDto } from "../dtos/request/edit-customer-request.dto";
 import { Customer } from "../../domain/entities/customer";
+import { RegisterCustomerCommand } from "../../messages/commands/register-customer-command";
 
 @Injectable()
 export class CustomerApplicationServices {
@@ -38,8 +39,16 @@ export class CustomerApplicationServices {
     if (notification.hasErrors()){
       return Result.error(notification);
     }
-    const insertResult= await this.customerRepository.insert(registerCustomerRequestDto as any);
-    const customerId:number=Number(insertResult.identifiers[0].id);
+
+    const customerCommand= new RegisterCustomerCommand(
+      registerCustomerRequestDto.firstName,
+      registerCustomerRequestDto.lastName,
+      registerCustomerRequestDto.phone,
+      registerCustomerRequestDto.address
+    )
+
+    const customerId=await this.commandBus.execute(customerCommand);
+
     const registerCustomerResponseDto:RegisterCustomerResponseDto= new RegisterCustomerResponseDto(
       customerId,
       registerCustomerRequestDto.firstName,

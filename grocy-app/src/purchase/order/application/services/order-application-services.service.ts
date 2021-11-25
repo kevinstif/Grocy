@@ -19,6 +19,7 @@ export class OrderApplicationServices {
 
   constructor(
     private registerOrderValidator:RegisterOrderValidator,
+    private commandBus:CommandBus,
     @InjectRepository(OrderTypeORM)
     private readonly orderRepository:Repository<OrderTypeORM>
   ) {}
@@ -42,14 +43,21 @@ export class OrderApplicationServices {
     if (notification.hasErrors()){
       return Result.error(notification);
     }
-    const insertResult= await this.orderRepository.insert(registerOrderRequestDto as any);
 
-    const orderId:number=Number(insertResult.identifiers[0].id);
+    const date=DateTime.utcNow()
+
+    const registerOrderCommand=new RegisterOrderCommand(
+      registerOrderRequestDto.price,
+      date,
+      registerOrderRequestDto.status
+    )
+
+    const orderId=await this.commandBus.execute(registerOrderCommand);
 
     const registerOrderResponseDto:RegisterOrderResponseDto= new RegisterOrderResponseDto(
       orderId,
       registerOrderRequestDto.price,
-      registerOrderRequestDto.purchaseDate,
+      date.getDate().toString(),
       registerOrderRequestDto.status
     );
     return Result.ok(registerOrderResponseDto);

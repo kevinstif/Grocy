@@ -21,7 +21,7 @@ export class OrderController{
         }
         catch (error){
             console.log(error);
-            ApiController.serverError(response);
+            ApiController.serverError(response,error);
         }
     }
 }

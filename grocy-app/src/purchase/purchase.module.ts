@@ -11,8 +11,9 @@ import { ProductsController } from "./product/api/products.controller";
 import { ProductApplicationService } from "./product/application/services/product-application.service";
 import { RegisterProductValidator } from "./product/application/validators/register-product.validator";
 import { ProductTypeORM } from "./product/infrastructure/persistence/typeorm/entities/productTypeORM";
+import { RegisterProductHandler } from "./product/application/handlers/command/register-product.handler";
 
-export const CommandHandlers=[RegisterOrderHandler]
+export const CommandHandlers=[RegisterOrderHandler,RegisterProductHandler]
 export const EventHandlers=[OrderRegisteredHandler]
 
 @Module({

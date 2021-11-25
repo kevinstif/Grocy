@@ -27,7 +27,7 @@ export class SuppliersController {
       }
       return ApiController.error(response, result.error.getErrors());
     } catch (error) {
-      return ApiController.serverError(response);
+      return ApiController.serverError(response,error);
     }
   }
 
@@ -37,7 +37,7 @@ export class SuppliersController {
       const suppliers = await this.queryBus.execute(new GetSuppliersQuery());
       return ApiController.ok(response, suppliers);
     } catch (error) {
-      return ApiController.serverError(response);
+      return ApiController.serverError(response,error);
     }
   }
 }

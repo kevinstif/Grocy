@@ -1,8 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { CartSchema } from "../../../../../../shoppingcart/cart/infrastructure/persistence/typeorm/entities/cart.schema";
 import { SupplierTypeorm } from "../../../../../../offer.context/suppliers/infrastructure/persistence/typeorm/entities/supplier.typeorm";
 import { TypeProduct } from "../../../../domain/enums/type-product";
 import { PriceTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/PriceTypeORM";
+import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
 
 @Entity('products')
 export class ProductTypeORM{

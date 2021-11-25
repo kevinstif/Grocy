@@ -1,6 +1,5 @@
 import { Entity } from "../../../../common/domain/entities/entity";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
-import { Cart } from "../../../../shoppingcart/cart/domain/entities/cart";
 import { Money } from "../../../../common/domain/value-objects/money.value";
 import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
 import { Status } from "../../../../common/domain/Enum/Status";

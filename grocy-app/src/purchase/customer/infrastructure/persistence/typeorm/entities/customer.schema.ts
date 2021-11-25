@@ -1,20 +1,18 @@
-import { Column, Entity, EntitySchema, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { OrderTypeORM } from "../../../../../order/infrastructure/persistence/typeorm/entities/orderTypeORM";
-import { CartSchema } from "../../../../../../shoppingcart/cart/infrastructure/persistence/typeorm/entities/cart.schema";
+import { NameTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/NameTypeORM";
+import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
 
 @Entity('customers')
 export class CustomerSchema{
   @PrimaryGeneratedColumn('increment',{type: 'bigint', name: 'id', unsigned: true})
   public id:number;
 
-  @Column('varchar',{name:'first_name'})
-  public firstName:string;
+  @Column(()=>NameTypeORM,{prefix:false})
+  public name:NameTypeORM;
 
-  @Column('varchar',{name:'last_name'})
-  public lastName:string;
-
-  @Column('bigint',{name:'phone'})
-  public phone:number;
+  @Column('varchar',{name:'phone'})
+  public phone:string;
 
   @Column('varchar',{name:'address'})
   public address:string;

@@ -2,6 +2,11 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Res } fr
 import { CustomerApplicationServices } from "../application/services/customer-application-services.service";
 import { RegisterCustomerRequestDto } from "../application/dtos/request/register-customer-request.dto";
 import { EditCustomerRequestDto } from "../application/dtos/request/edit-customer-request.dto";
+import { Result } from "typescript-result";
+import { AppNotification } from "../../../common/application/app.notification";
+import { RegisterCustomerResponseDto } from "../application/dtos/response/register-customer-response.dto";
+import { ApiController } from "../../../common/api/api.controller";
+import { response } from "express";
 
 @Controller('customers')
 export class CustomerController {
@@ -20,7 +25,15 @@ export class CustomerController {
   @Post()
   async CreatedCustomer(@Body() registerCustomerRequestDto:RegisterCustomerRequestDto){
 
-      return await this.customerApplicationServices.Create(registerCustomerRequestDto);
+      try {
+        const result:Result<AppNotification, RegisterCustomerResponseDto>= await this.customerApplicationServices.Create(registerCustomerRequestDto);
+        if (result.isSuccess()){
+          return ApiController.created(response,result.value);
+        }
+        return  ApiController.error(response,result.error.getErrors())
+      }catch (error){
+        return ApiController.serverError(response,error);
+      }
   }
 
   @Put(":id")

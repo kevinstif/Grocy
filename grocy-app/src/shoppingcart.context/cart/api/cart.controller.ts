@@ -3,6 +3,7 @@ import { CartApplicationServices } from "../application/services/cart-applicatio
 import { RegisterCartRequestDto } from "../application/dtos/request/register-cart-request.dto";
 import { EditCartRequestDto } from "../application/dtos/request/edit-cart-request.dto";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { RegisterPaymentRequestDto } from "../application/dtos/request/register-payment-request.dto";
 
 @ApiTags('Shopping Carts')
 @Controller('shoppingCarts')
@@ -26,6 +27,12 @@ export class CartController {
   async CreatedCart(@Body() registerCartRequestDto:RegisterCartRequestDto){
 
       return await this.cartApplicationServices.Create(registerCartRequestDto);
+  }
+
+  @Post('/paid')
+  @ApiOperation({summary:'Pay shopping cart'})
+  async PayCart(@Body() registerPaymentRequestDto:RegisterPaymentRequestDto){
+    return await this.cartApplicationServices.Paid(registerPaymentRequestDto);
   }
 
   @Put(":id")

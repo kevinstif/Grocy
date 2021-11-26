@@ -33,6 +33,7 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
       .setParameter("id", command.customerId)
       .getOne();
     if (customerTypeORM == null) {
+      console.log("customer no existe");
       return paymentId;
     }
     //cart exixte?
@@ -44,13 +45,15 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
       .setParameter("id", command.cartid)
       .getOne();
     if (cartTypeORM == null) {
-      return "shopping cart not exist";
+      console.log("shopping cart not exist");
+      return paymentId;
     }
 
     let price:Money=Money.create(command.price,"Soles")
 
     let payment:Payment=PaymentFactory.createFrom(command.customerId,command.cartid,price,command.date)
 
+    console.log(command.date);
     let paymentTypeORM:PaymentSchema=PaymentMapper.toTypeORM(payment);
 
     paymentTypeORM= await this.paymentRepository.save(paymentTypeORM);
@@ -66,5 +69,7 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
     payment=this.publisher.mergeObjectContext(payment);
     payment.paidOut();
     payment.commit();
+
+    return paymentId;
   }
 }

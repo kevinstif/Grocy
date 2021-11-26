@@ -22,6 +22,11 @@ export class RegisterPaymentValidator {
       notification.addError('CartId is required', null);
     }
 
+    const price:number=registerPaymentRequestDto.price ? registerPaymentRequestDto.price:0;
+    if(price<=0){
+      notification.addError("mount is required",null);
+    }
+
     if (notification.hasErrors()) {
       return notification;
     }

@@ -14,10 +14,11 @@ export class Payment extends Entity{
     this.customerId=customerId;
     this.cartId=cartId;
     this.price=price;
+    this.date=date;
   }
 
   public paidOut(){
-
+    console.log("este es el evento de pago")
   }
 
   public getCustomerId():number{

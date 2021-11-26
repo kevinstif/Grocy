@@ -6,7 +6,7 @@ export class RegisterPaymentResponseDto {
     public id:number,
     public readonly customerId:number,
     public readonly cartId:number,
-    public readonly price:Money,
-    public readonly date:DateTime
+    public readonly price:number,
+    public readonly date:string
   ) {}
 }

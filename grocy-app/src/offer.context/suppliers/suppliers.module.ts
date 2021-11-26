@@ -13,7 +13,7 @@ import { OfferApplicationServices } from "../offers/application/services/offer-a
 import { RegisterOfferValidator } from "../offers/application/validators/register-offer.validator";
 import { RegisterOfferHandler } from "../offers/application/handlers/comands/register-offer.handler";
 import { OfferRegisteredHandler } from "../offers/application/handlers/events/offer-registered.handle";
-import { OfferSchema } from "../offers/infrastructure/persistence/schema/offer.schema";
+import { OfferTypeORM } from "../offers/infrastructure/persistence/typeorm/entities/offerTypeORM";
 
 
 export const CommandHandlers = [RegisterSupplierHandler,
@@ -25,8 +25,7 @@ export const QueryHandlers = [GetSuppliersHandler];
 @Module({
   imports: [
     CqrsModule,
-    TypeOrmModule.forFeature([SupplierTypeorm]),
-    TypeOrmModule.forFeature([OfferSchema]),
+    TypeOrmModule.forFeature([SupplierTypeorm,OfferTypeORM])
   ],
   controllers: [
     SuppliersController,

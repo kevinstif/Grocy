@@ -1,9 +1,10 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class InitialSchema1637891579090 implements MigrationInterface {
-    name = 'InitialSchema1637891579090'
+export class InitialSchema1637961729478 implements MigrationInterface {
+    name = 'InitialSchema1637961729478'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE TABLE \`offers\` (\`id\` bigint UNSIGNED NOT NULL AUTO_INCREMENT, \`due_date\` datetime NOT NULL, \`status\` enum ('Done', 'Cancel') NOT NULL DEFAULT 'Done', \`amount\` decimal(10,2) NULL, \`currency\` varchar(10) NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`customers\` (\`id\` bigint UNSIGNED NOT NULL AUTO_INCREMENT, \`phone\` varchar(255) NOT NULL, \`address\` varchar(255) NOT NULL, \`first_name\` varchar(75) NULL, \`last_name\` varchar(75) NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`orders\` (\`id\` bigint UNSIGNED NOT NULL AUTO_INCREMENT, \`status\` enum ('Done', 'Cancel') NOT NULL DEFAULT 'Done', \`purchase_date\` datetime NOT NULL, \`cart_id\` bigint UNSIGNED NULL, \`customer_id\` bigint UNSIGNED NULL, \`amount\` decimal(10,2) NULL, \`currency\` varchar(10) NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`cart\` (\`id\` bigint UNSIGNED NOT NULL AUTO_INCREMENT, \`state\` varchar(255) NOT NULL, \`quantity\` int NOT NULL, \`creation_date\` varchar(255) NOT NULL, \`customer_id\` bigint UNSIGNED NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
@@ -40,6 +41,7 @@ export class InitialSchema1637891579090 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE \`cart\``);
         await queryRunner.query(`DROP TABLE \`orders\``);
         await queryRunner.query(`DROP TABLE \`customers\``);
+        await queryRunner.query(`DROP TABLE \`offers\``);
     }
 
 }

@@ -3,10 +3,9 @@ import { RegisterCartCommand } from "../../../messages/commands/register-cart-co
 import { InjectRepository } from "@nestjs/typeorm";
 import { CartSchema } from "../../../infrastructure/persistence/typeorm/entities/cart.schema";
 import { InsertResult, Repository } from "typeorm";
-import { Cart } from "../../../domain/entities/cart";
 import { CartFactory } from "../../../domain/factories/cart-factory";
+import { Cart } from "../../../domain/entities/cart";
 import { CartMapper } from "../../mapper/cart.mapper";
-
 
 @CommandHandler(RegisterCartCommand)
 export class RegisterCartHandler

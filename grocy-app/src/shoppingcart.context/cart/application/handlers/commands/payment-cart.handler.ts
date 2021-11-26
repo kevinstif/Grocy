@@ -7,6 +7,8 @@ import { CartSchema } from "../../../infrastructure/persistence/typeorm/entities
 import { Payment } from "../../../domain/entities/payment";
 import { PaymentFactory } from "../../../domain/factories/payment-factory";
 import { Money } from "../../../../../common/domain/value-objects/money.value";
+import { PaymentSchema } from "../../../infrastructure/persistence/typeorm/entities/payment.shema";
+import { PaymentMapper } from "../../mapper/payment.mapper";
 
 @CommandHandler(MakePaymentCommand)
 export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
@@ -15,10 +17,13 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
     private customerRepository:Repository<CustomerSchema>,
     @InjectRepository(CartSchema)
     private cartRepository:Repository<CartSchema>,
+    @InjectRepository(PaymentSchema)
+    private paymentRepository:Repository<PaymentSchema>,
     private publisher:EventPublisher
   ) {}
 
   async execute(command: MakePaymentCommand) {
+    let paymentId:number=0;
     //customer existe?
     const customerTypeORM: CustomerSchema = await this.customerRepository
       .createQueryBuilder()
@@ -28,7 +33,7 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
       .setParameter("id", command.customerId)
       .getOne();
     if (customerTypeORM == null) {
-      return "customer not exist";
+      return paymentId;
     }
     //cart exixte?
     const cartTypeORM: CartSchema = await this.cartRepository
@@ -45,7 +50,18 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
     let price:Money=Money.create(command.price,"Soles")
 
     let payment:Payment=PaymentFactory.createFrom(command.customerId,command.cartid,price,command.date)
-    // Emitir evento
+
+    let paymentTypeORM:PaymentSchema=PaymentMapper.toTypeORM(payment);
+
+    paymentTypeORM= await this.paymentRepository.save(paymentTypeORM);
+
+    if (paymentTypeORM==null){
+      return paymentId;
+    }
+
+    paymentId=paymentTypeORM.id
+
+    payment.changeId(paymentId);
 
     payment=this.publisher.mergeObjectContext(payment);
     payment.paidOut();

@@ -4,8 +4,7 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm";
 
-import { Money } from "../../../../../../common/domain/value-objects/money.value";
-import { DateTime } from "../../../../../../common/domain/value-objects/date-time.value";
+import { PriceTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/PriceTypeORM";
 
 @Entity('payment')
 export class PaymentSchema{
@@ -19,11 +18,10 @@ export class PaymentSchema{
   @Column('int',{name:'cartId'})
   public cartId:number;
 
-  @Column('number',{name:'price'})
-  public price:Money;
+  @Column(()=>PriceTypeORM,{prefix:false})
+  public price:PriceTypeORM;
 
-  @Column('date',{name:'date'})
-  public date:DateTime;
+  @Column('datetime',{name:'date'})
+  public date:string;
 
-  //Relationships
 }

@@ -9,7 +9,6 @@ import { Status } from "../../../../../common/domain/Enum/Status";
 import { Money } from "../../../../../common/domain/value-objects/money.value";
 import { OrderMapper } from "../../mapper/order.mapper";
 
-
 @CommandHandler(RegisterOrderCommand)
 export class RegisterOrderHandler
   implements ICommandHandler<RegisterOrderCommand>{

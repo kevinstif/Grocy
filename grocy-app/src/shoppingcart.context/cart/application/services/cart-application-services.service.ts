@@ -10,6 +10,8 @@ import { CartSchema } from "../../infrastructure/persistence/typeorm/entities/ca
 import { InjectRepository } from "@nestjs/typeorm";
 import { EditCartRequestDto } from "../dtos/request/edit-cart-request.dto";
 import { Cart } from "../../domain/entities/cart";
+import { RegisterCartCommand } from "../../messages/commands/register-cart-command";
+import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
 
 @Injectable()
 export class CartApplicationServices {
@@ -38,14 +40,22 @@ export class CartApplicationServices {
     if (notification.hasErrors()){
       return Result.error(notification);
     }
-    const insertResult= await this.cartRepository.insert(registerCartRequestDto as any);
-    const cartId:number=Number(insertResult.identifiers[0].id);
+
+    const date=DateTime.utcNow()
+
+    const registerCartCommand= new RegisterCartCommand(
+      registerCartRequestDto.customerId,
+      registerCartRequestDto.quantity,
+      date,
+      registerCartRequestDto.state
+    )
+
+    const cartId= await this.commandBus.execute(registerCartCommand)
     const registerCartResponseDto:RegisterCartResponseDto= new RegisterCartResponseDto(
       cartId,
       registerCartRequestDto.customerId,
-      registerCartRequestDto.productId,
       registerCartRequestDto.quantity,
-      registerCartRequestDto.creationDate,
+      date.getDate().toString(),
       registerCartRequestDto.state
     );
     return Result.ok(registerCartResponseDto);

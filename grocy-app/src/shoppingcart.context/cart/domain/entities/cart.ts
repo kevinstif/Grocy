@@ -1,25 +1,22 @@
 import { Entity } from "../../../../common/domain/entities/entity";
 import { CartRegisteredEvents } from "../../messages/events/cart-registered.events";
-import { Order } from "../../../../purchase/order/domain/entities/order";
+import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
 
 export class Cart extends Entity {
   private CustomerId:number;
-  private ProductId:number;
   private Quantity:number;
-  private CreationDate:string;
+  private CreationDate:DateTime;
   private State:string;
-  private Orders:Order[];
 
-  public constructor(id:number,customerId:number,productId:number,quantity:number,creationDate:string,state:string) {
+  public constructor(id:number,customerId:number,quantity:number,creationDate:DateTime,state:string) {
     super(id);
     this.CustomerId = customerId;
-    this.ProductId = productId;
     this.Quantity = quantity;
     this.CreationDate = creationDate;
     this.State = state;
   }
   public register(){
-    const event=new CartRegisteredEvents(this.id, this.CustomerId, this.ProductId, this.Quantity, this.CreationDate, this.State);
+    const event=new CartRegisteredEvents(this.id, this.CustomerId, this.Quantity, this.CreationDate, this.State);
     this.apply(event);
   }
 
@@ -29,7 +26,7 @@ export class Cart extends Entity {
   public GetQuantity():number{
     return this.Quantity;
   }
-  public GetCreationDate():string{
+  public GetCreationDate():DateTime{
     return this.CreationDate;
   }
   public GetState():string{

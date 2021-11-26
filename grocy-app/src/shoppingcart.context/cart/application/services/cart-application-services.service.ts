@@ -12,6 +12,10 @@ import { EditCartRequestDto } from "../dtos/request/edit-cart-request.dto";
 import { Cart } from "../../domain/entities/cart";
 import { RegisterCartCommand } from "../../messages/commands/register-cart-command";
 import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
+import { PaymentCartResponseDto } from "../dtos/response/payment-cart-response.dto";
+import { PaymentCartRequestDto } from "../dtos/request/payment-cart-request.dto";
+import { PaymentCartValidator } from "../validators/payment-cart.validator";
+import { MakePaymentCommand } from "../../messages/commands/make-payment-command";
 
 @Injectable()
 export class CartApplicationServices {
@@ -19,6 +23,7 @@ export class CartApplicationServices {
   constructor(
     private commandBus:CommandBus,
     private registerCartValidator:RegisterCartValidator,
+    private paymentCartValidator:PaymentCartValidator,
     @InjectRepository(CartSchema)
     private readonly cartRepository:Repository<Cart>,
   ) {}
@@ -47,6 +52,7 @@ export class CartApplicationServices {
       registerCartRequestDto.customerId,
       registerCartRequestDto.quantity,
       date,
+      registerCartRequestDto.price,
       registerCartRequestDto.state
     )
 
@@ -56,10 +62,38 @@ export class CartApplicationServices {
       registerCartRequestDto.customerId,
       registerCartRequestDto.quantity,
       date.getDate().toString(),
+      registerCartRequestDto.price,
       registerCartRequestDto.state
     );
     return Result.ok(registerCartResponseDto);
   }
+
+  async Pay(paymentCartRequest:PaymentCartRequestDto):Promise<Result<AppNotification, PaymentCartResponseDto>>{
+    const notification:AppNotification=await this.paymentCartValidator.validate(paymentCartRequest);
+
+    if (notification.hasErrors()){
+      return Result.error(notification);
+    }
+
+    const date=DateTime.utcNow()
+
+    const makePaymentCommand= new MakePaymentCommand(
+      paymentCartRequest.cartId,
+      paymentCartRequest.customerId,
+      date,
+
+    )
+
+    const status= await this.commandBus.execute(makePaymentCommand)
+    const paymentCartResponseDto:PaymentCartResponseDto= new PaymentCartResponseDto(
+      paymentCartRequest.cartId,
+      paymentCartRequest.customerId,
+      date.getDate().toString(),
+      status
+    );
+    return Result.ok(paymentCartResponseDto);
+  }
+
   async Update(id: number,editCartRequestDto:EditCartRequestDto){
     const cart = await this.cartRepository.findOne(id);
     if(!cart) throw new NotFoundException('Not found');

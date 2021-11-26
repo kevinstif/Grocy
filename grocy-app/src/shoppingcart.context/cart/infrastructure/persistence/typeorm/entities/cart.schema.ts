@@ -11,6 +11,7 @@ import {
 import { OrderTypeORM } from "../../../../../../purchase/order/infrastructure/persistence/typeorm/entities/orderTypeORM";
 import { ProductTypeORM } from "../../../../../../purchase/product/infrastructure/persistence/typeorm/entities/productTypeORM";
 import { CustomerSchema } from "../../../../../../purchase/customer/infrastructure/persistence/typeorm/entities/customer.schema";
+import { PriceTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/PriceTypeORM";
 
 @Entity('cart')
 export class CartSchema{
@@ -26,6 +27,9 @@ export class CartSchema{
 
   @Column('varchar',{name:'creation_date'})
   public creationDate:string;
+
+  @Column(()=>PriceTypeORM,{prefix:false})
+  public price:PriceTypeORM;
 
   @OneToMany(()=>OrderTypeORM,(order)=>order.Cart)
   public order:OrderTypeORM[]

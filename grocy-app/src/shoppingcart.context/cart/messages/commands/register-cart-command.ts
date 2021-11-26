@@ -5,6 +5,7 @@ export class RegisterCartCommand {
     public readonly customerId:number,
     public readonly quantity:number,
     public readonly creationDate:DateTime,
+    public readonly price:number,
     public readonly state:string
   ) {}
 }

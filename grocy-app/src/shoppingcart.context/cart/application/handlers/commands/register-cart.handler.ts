@@ -6,6 +6,7 @@ import { InsertResult, Repository } from "typeorm";
 import { Cart } from "../../../domain/entities/cart";
 import { CartFactory } from "../../../domain/factories/cart-factory";
 import { CartMapper } from "../../mapper/cart.mapper";
+import { Money } from "../../../../../common/domain/value-objects/money.value";
 
 
 @CommandHandler(RegisterCartCommand)
@@ -19,10 +20,12 @@ export class RegisterCartHandler
 
   async execute(command:RegisterCartCommand){
     let cartId:number=0;
+    let price:Money=Money.create(command.price,'Soles')
     const cart: Cart = CartFactory.createFrom(
       command.customerId,
       command.quantity,
       command.creationDate,
+      price,
       command.state
     );
 

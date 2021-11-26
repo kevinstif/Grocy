@@ -26,6 +26,10 @@ export class RegisterCartValidator {
     if (state.length <= 0) {
       notification.addError('Cart state is required', null);
     }
+    const price: number=registerCartRequestDto.price ? registerCartRequestDto.price:0;
+    if (price<=0){
+      notification.addError('Cart price is required',null);
+    }
     if (notification.hasErrors()) {
       return notification;
     }

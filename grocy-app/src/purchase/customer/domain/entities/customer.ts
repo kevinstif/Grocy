@@ -1,23 +1,41 @@
 import { Entity } from "../../../../common/domain/entities/entity";
 import { CustomerRegisteredEvents } from "../../messages/events/customer-registered.events";
+import { Name } from "../../../../common/domain/value-objects/name.value";
+import { Money } from "../../../../common/domain/value-objects/money.value";
 
 export class Customer extends Entity {
-  private FirstName:string;
-  private LastName:string;
-  private Phone:string;
-  private Address:string;
+  private name:Name;
+  private phone:string;
+  private address:string;
+  private balance:Money;
 
 
-  public constructor(id:number,firstName:string,lastName:string,phone:string,address:string) {
+  public constructor(id:number,name:Name,phone:string,address:string, balance:Money) {
     super(id);
-    this.FirstName = firstName;
-    this.LastName = lastName;
-    this.Phone = phone;
-    this.Address = address;
+    this.name = name;
+    this.phone = phone;
+    this.address = address;
+    this.balance = balance;
   }
   public register(){
-    const event=new CustomerRegisteredEvents(this.id, this.FirstName, this.LastName, this.Phone, this.Address);
+    const event=new CustomerRegisteredEvents(this.id, this.name, this.phone, this.address, this.balance.getAmount());
     this.apply(event);
   }
 
+  public getName():Name{
+    return this.name
+  }
+  public getPhone():string{
+    return this.phone
+  }
+  public getAddress():string{
+    return this.address
+  }
+  public getBalance():Money{
+    return this.balance
+  }
+  public subtract(price: number) {
+
+    this.balance = Money.create(this.balance.getAmount() - price,this.balance.getCurrency());
+  }
 }

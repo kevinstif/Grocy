@@ -1,42 +1,47 @@
 import { Entity } from "../../../../common/domain/entities/entity";
 import { OrderRegisteredEvents } from "../../messages/events/order-registered.events";
-import { Cart } from "../../../../shoppingcart.context/cart/domain/entities/cart";
+import { Money } from "../../../../common/domain/value-objects/money.value";
+import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
+import { Status } from "../../../../common/domain/Enum/Status";
 
 export class Order extends Entity {
-  private Price:number;
-  private PurchaseDate:string;
-  private Status:string;
-  private cart:Cart;
-  private cartId:number;
+  private Price:Money;
+  private PurchaseDate:DateTime;
+  private Status:Status;
 
-  public constructor(id:number,price:number,purchaseDate:string,status:string) {
+  public constructor(id:number,price:Money,purchaseDate:DateTime,status:Status) {
     super(id);
     this.Price=price;
     this.PurchaseDate=purchaseDate;
     this.Status=status;
   }
   public register(){
-    const event=new OrderRegisteredEvents(this.id,this.Price,this.PurchaseDate,this.Status);
+    const event=new OrderRegisteredEvents(
+      this.id,
+      this.Price.getAmount(),
+      this.PurchaseDate.getDate().toString(),
+      this.Status
+    );
     this.apply(event);
   }
 
-  public GetPrice():number{
+  public GetPrice():Money{
     return this.Price;
   }
-  public GetPurchaseDate():string{
+  public GetPurchaseDate():DateTime{
     return this.PurchaseDate;
   }
-  public GetStatus():string{
+  public GetStatus():Status{
     return this.Status;
   }
 
-  public changePrice(price:number):void{
+  public changePrice(price:Money):void{
     this.Price=price;
   }
-  public changePurchaseDate(purchaseDate:string):void{
+  public changePurchaseDate(purchaseDate:DateTime):void{
     this.PurchaseDate=purchaseDate;
   }
-  public changeStatus(status:string):void{
+  public changeStatus(status:Status):void{
     this.Status=status;
   }
 }

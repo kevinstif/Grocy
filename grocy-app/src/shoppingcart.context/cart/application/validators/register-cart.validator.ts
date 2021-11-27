@@ -14,24 +14,15 @@ export class RegisterCartValidator {
 
     let notification: AppNotification = new AppNotification();
 
-    const customerId: number = registerCartRequestDto.customerId;
+    const customerId: number = registerCartRequestDto.customerId ? registerCartRequestDto.customerId:0;
     if (customerId <= 0) {
-      notification.addError('Cart customerId does not exists', null);
+      notification.addError('Cart customerId does is required', null);
     }
-    const productId: number = registerCartRequestDto.productId;
-    if (productId <= 0) {
-      notification.addError('Cart productId does not exists', null);
-    }
-    const quantity: number = registerCartRequestDto.quantity;
+    const quantity: number = registerCartRequestDto.quantity ? registerCartRequestDto.quantity:0;
     if (quantity <= 0) {
       notification.addError('Cart quantity is required', null);
     }
-    const Date: string = registerCartRequestDto.creationDate;
-    const creationDate:string=Date.trim();
-    if (creationDate.length <= 0) {
-      notification.addError('Cart creationDate is required', null);
-    }
-    const state: string = registerCartRequestDto.state.trim();
+    const state: string = registerCartRequestDto.state ? registerCartRequestDto.state.trim():'';
     if (state.length <= 0) {
       notification.addError('Cart state is required', null);
     }

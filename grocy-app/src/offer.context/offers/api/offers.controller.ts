@@ -6,8 +6,8 @@ import { registerOffersResponseDto } from "../application/dtos/response/register
 import { AppNotification } from "../../../common/application/app.notification";
 import { ApiController } from "../../../common/api/api.controller";
 
-@Controller('offer')
-export class OrderController{
+@Controller('offers')
+export class OffersController{
     constructor(private readonly orderApplicationServices:OfferApplicationServices,) {}
 
     @Post()
@@ -21,7 +21,7 @@ export class OrderController{
         }
         catch (error){
             console.log(error);
-            ApiController.serverError(response);
+            ApiController.serverError(response,error);
         }
     }
 }

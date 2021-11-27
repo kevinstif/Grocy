@@ -7,8 +7,8 @@ import {Status} from "../../../../../common/domain/Enum/Status";
 export class registerOffersResponseDto{
     public constructor(
         public id:Id,
-        public readonly price:Money,
-        public readonly purchaseDate:DateTime,
-        public state:Status,
+        public readonly price:number,
+        public readonly purchaseDate:string,
+        public state:string,
     ) {}
 }

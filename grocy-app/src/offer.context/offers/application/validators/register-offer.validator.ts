@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { OfferSchema } from "../../infrastructure/persistence/schema/offer.schema";
+import { OfferTypeORM } from "../../infrastructure/persistence/typeorm/entities/offerTypeORM";
 import { Repository } from "typeorm";
 import { Offer } from "../../domain/entity/offer";
 import { registerOffersRequestDto } from "../dtos/request/register-offers-request.dto";
@@ -11,18 +11,20 @@ import { DateTime } from "../../../../common/domain/value-objects/date-time.valu
 
 @Injectable()
 export class RegisterOfferValidator{
-    constructor(@InjectRepository(OfferSchema) private offerRepository:Repository<Offer>) {}
+    constructor(@InjectRepository(OfferTypeORM) private offerRepository:Repository<Offer>) {}
 
     public async validate(registerOffersRequestDto:registerOffersRequestDto):Promise<AppNotification>{
         let notification: AppNotification = new AppNotification();
-        const discountPrice: Money = registerOffersRequestDto.discountPrice;
-        if (discountPrice.getAmount() <= 0) {
+        const discountPrice: number = registerOffersRequestDto.discountPrice ? registerOffersRequestDto.discountPrice:0;
+        if (discountPrice <= 0){
             notification.addError('Offer discount price is required', null);
         }
-        const dueDate: DateTime = registerOffersRequestDto.dueDate;
-        const DueDate:string=dueDate.getDate().toString().trim();
-        if (DueDate.length <= 0) {
-            notification.addError('Offer dueDate is required', null);
+        const state: string = registerOffersRequestDto.state ? registerOffersRequestDto.state.trim():'';
+
+        if (state.length <= 0) {
+            notification.addError('Offer state is required', null);
+        } else if (state!= 'Done' && state!='Cancel') {
+            notification.addError('Order status is invalid use Done || Cancel', null);
         }
         if (notification.hasErrors()) {
             return notification;

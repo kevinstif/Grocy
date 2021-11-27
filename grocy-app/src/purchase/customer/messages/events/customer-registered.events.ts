@@ -5,7 +5,8 @@ export class CustomerRegisteredEvents {
     public readonly id:number,
     public readonly name:Name,
     public readonly phone:string,
-    public readonly address:string
+    public readonly address:string,
+    public readonly balance:number,
   ) {}
 
 }

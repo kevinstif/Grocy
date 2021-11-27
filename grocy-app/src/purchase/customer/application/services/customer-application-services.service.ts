@@ -44,7 +44,8 @@ export class CustomerApplicationServices {
       registerCustomerRequestDto.firstName,
       registerCustomerRequestDto.lastName,
       registerCustomerRequestDto.phone,
-      registerCustomerRequestDto.address
+      registerCustomerRequestDto.address,
+      registerCustomerRequestDto.balance
     )
 
     const customerId=await this.commandBus.execute(customerCommand);
@@ -54,7 +55,8 @@ export class CustomerApplicationServices {
       registerCustomerRequestDto.firstName,
       registerCustomerRequestDto.lastName,
       registerCustomerRequestDto.phone,
-      registerCustomerRequestDto.address
+      registerCustomerRequestDto.address,
+      registerCustomerRequestDto.balance
     );
     return Result.ok(registerCustomerResponseDto);
   }

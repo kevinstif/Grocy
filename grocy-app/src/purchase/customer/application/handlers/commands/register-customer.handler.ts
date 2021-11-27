@@ -9,6 +9,7 @@ import { AppNotification } from "../../../../../common/application/app.notificat
 import { Repository } from "typeorm";
 import { Result } from "typescript-result";
 import { CustomerMapper } from "../../mapper/customer.mapper";
+import { Money } from "../../../../../common/domain/value-objects/money.value";
 
 
 
@@ -23,13 +24,14 @@ export class RegisterCustomerHandler
 
   async execute(command:RegisterCustomerCommand){
     let customerId:number=0;
+    let balance:Money=Money.create(command.balance,'Soles')
     const name:Result<AppNotification, Name>=Name.create(command.firstName,command.lastName);
 
     if (name.isFailure()){
       return customerId;
     }
 
-    let customer:Customer=CustomerFactory.createFrom(name.value,command.phone,command.address)
+    let customer:Customer=CustomerFactory.createFrom(name.value,command.phone,command.address,balance)
     let customerTypeORM:CustomerSchema=CustomerMapper.toTypeORM(customer);
 
     customerTypeORM=await this.customerRepository.save(customerTypeORM);

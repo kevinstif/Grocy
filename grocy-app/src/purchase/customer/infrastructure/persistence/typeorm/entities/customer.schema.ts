@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { OrderTypeORM } from "../../../../../order/infrastructure/persistence/typeorm/entities/orderTypeORM";
 import { NameTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/NameTypeORM";
 import { CartSchema } from "../../../../../../shoppingcart.context/cart/infrastructure/persistence/typeorm/entities/cart.schema";
+import { PriceTypeORM } from "../../../../../../common/infrastructure/persistence/typeorm/value-objects/PriceTypeORM";
 
 @Entity('customers')
 export class CustomerSchema{
@@ -16,6 +17,9 @@ export class CustomerSchema{
 
   @Column('varchar',{name:'address'})
   public address:string;
+
+  @Column(()=>PriceTypeORM,{prefix:false})
+  public balance:PriceTypeORM;
 
   @OneToMany(()=>OrderTypeORM,(order)=>order.customer)
   public orders:OrderTypeORM[]

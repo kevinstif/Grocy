@@ -12,14 +12,16 @@ import { PaymentSchema } from "./infrastructure/persistence/typeorm/entities/pay
 import { RegisterPaymentValidator } from "./application/validators/register-payment.validator";
 import { CustomerSchema } from "../../purchase/customer/infrastructure/persistence/typeorm/entities/customer.schema";
 import { PaymentMadeHandler } from "../../purchase/order/application/handlers/events/payment-made.handler";
+import { RegisterOrderHandler } from "../../purchase/order/application/handlers/commands/register-order.handler";
+import { OrderTypeORM } from "../../purchase/order/infrastructure/persistence/typeorm/entities/orderTypeORM";
 
-export const CommandHandlers=[RegisterCartHandler,PaymentCartHandler]
+export const CommandHandlers=[RegisterCartHandler,PaymentCartHandler,RegisterOrderHandler]
 export const EventHandlers=[CartRegisteredHandler,PaymentMadeHandler]
 
 @Module({
   imports: [
     CqrsModule,
-    TypeOrmModule.forFeature([CartSchema,PaymentSchema,CustomerSchema])
+    TypeOrmModule.forFeature([CartSchema,PaymentSchema,CustomerSchema,OrderTypeORM])
   ],
   controllers:[CartController],
   providers:[

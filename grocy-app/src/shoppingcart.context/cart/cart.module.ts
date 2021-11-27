@@ -11,9 +11,10 @@ import { PaymentCartHandler } from "./application/handlers/commands/payment-cart
 import { PaymentSchema } from "./infrastructure/persistence/typeorm/entities/payment.shema";
 import { RegisterPaymentValidator } from "./application/validators/register-payment.validator";
 import { CustomerSchema } from "../../purchase/customer/infrastructure/persistence/typeorm/entities/customer.schema";
+import { PaymentMadeHandler } from "../../purchase/order/application/handlers/events/payment-made.handler";
 
 export const CommandHandlers=[RegisterCartHandler,PaymentCartHandler]
-export const EventHandlers=[CartRegisteredHandler]
+export const EventHandlers=[CartRegisteredHandler,PaymentMadeHandler]
 
 @Module({
   imports: [

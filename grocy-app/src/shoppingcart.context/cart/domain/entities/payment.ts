@@ -1,6 +1,8 @@
 import { Money } from "../../../../common/domain/value-objects/money.value";
 import { Entity } from "../../../../common/domain/entities/entity";
 import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
+import { PaymentMade } from "../../messages/events/payment-made";
+
 
 export class Payment extends Entity{
 
@@ -18,7 +20,8 @@ export class Payment extends Entity{
   }
 
   public paidOut(){
-    console.log("este es el evento de pago")
+    const event=new PaymentMade(this.customerId,this.cartId,this.price.getAmount(),this.date.getDate().toString());
+    this.apply(event);
   }
 
   public getCustomerId():number{

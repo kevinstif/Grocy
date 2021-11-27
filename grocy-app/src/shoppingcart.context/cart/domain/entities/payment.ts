@@ -26,7 +26,7 @@ export class Payment extends Entity{
   }
 
   public customerPaid(){
-    const event= new CustomerPaid(this.customerId,this.price.getAmount());
+    const event= new CustomerPaid(this.customerId,this.cartId,this.price.getAmount(),this.date.getDate().toString());
     this.apply(event);
   }
 

@@ -18,6 +18,7 @@ export class RegisterCustomerValidator {
     const lastName:string=registerCustomerRequestDto.lastName ? registerCustomerRequestDto.lastName.trim():'';
     const phone:string=registerCustomerRequestDto.phone ? registerCustomerRequestDto.phone.trim():'';
     const address:string=registerCustomerRequestDto.address ? registerCustomerRequestDto.address.trim():'';
+    const balance:number=registerCustomerRequestDto.balance ? registerCustomerRequestDto.balance:0;
 
     if(firstName.length<=0){
       notification.addError('first name is required',null);
@@ -30,6 +31,9 @@ export class RegisterCustomerValidator {
     }
     if(address.length<=0){
       notification.addError('address is required',null);
+    }
+    if (balance<=0){
+      notification.addError('balance is required',null);
     }
     return notification
   }

@@ -67,7 +67,6 @@ export class PaymentCartHandler implements ICommandHandler<MakePaymentCommand>{
     payment.changeId(paymentId);
 
     payment=this.publisher.mergeObjectContext(payment);
-    payment.paidOut();
     payment.customerPaid();
     payment.commit();
 

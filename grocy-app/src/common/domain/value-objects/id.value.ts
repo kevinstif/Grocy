@@ -8,4 +8,8 @@ export class Id {
   public static of(value: number): Id {
     return new Id(value);
   }
+
+  public getValue() {
+    return this.value;
+  }
 }

@@ -14,9 +14,11 @@ import { CustomerSchema } from "../../purchase/customer/infrastructure/persisten
 import { PaymentMadeHandler } from "../../purchase/order/application/handlers/events/payment-made.handler";
 import { RegisterOrderHandler } from "../../purchase/order/application/handlers/commands/register-order.handler";
 import { OrderTypeORM } from "../../purchase/order/infrastructure/persistence/typeorm/entities/orderTypeORM";
+import { CustomerPaidHandler } from "../../purchase/customer/application/handlers/events/customer-paid.handler";
 
 export const CommandHandlers=[RegisterCartHandler,PaymentCartHandler,RegisterOrderHandler]
-export const EventHandlers=[CartRegisteredHandler,PaymentMadeHandler]
+export const EventHandlers=[CartRegisteredHandler,PaymentMadeHandler,CustomerPaidHandler]
+
 
 @Module({
   imports: [

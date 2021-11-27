@@ -34,4 +34,8 @@ export class Customer extends Entity {
   public getBalance():Money{
     return this.balance
   }
+  public subtract(price: number) {
+
+    this.balance = Money.create(this.balance.getAmount() - price,this.balance.getCurrency());
+  }
 }

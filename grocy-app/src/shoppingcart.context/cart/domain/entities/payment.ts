@@ -2,6 +2,7 @@ import { Money } from "../../../../common/domain/value-objects/money.value";
 import { Entity } from "../../../../common/domain/entities/entity";
 import { DateTime } from "../../../../common/domain/value-objects/date-time.value";
 import { PaymentMade } from "../../messages/events/payment-made";
+import { CustomerPaid } from "../../messages/events/customer-paid";
 
 
 export class Payment extends Entity{
@@ -21,6 +22,11 @@ export class Payment extends Entity{
 
   public paidOut(){
     const event=new PaymentMade(this.customerId,this.cartId,this.price.getAmount(),this.date.getDate().toString());
+    this.apply(event);
+  }
+
+  public customerPaid(){
+    const event= new CustomerPaid(this.customerId,this.price.getAmount());
     this.apply(event);
   }
 
